@@ -1,1 +1,621 @@
-<!DOCTYPE html><html lang='es'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><meta name='theme-color' content='#0B1220'><link rel='manifest' href='manifest.json'><title>Proyecto 13 Semanas</title><style>body{font-family:-apple-system;background:#0B1220;color:#fff;margin:0;padding:20px;max-width:420px} .c{background:#111827;border-radius:16px;padding:16px;margin:12px 0} button{width:100%;padding:14px;border:0;border-radius:12px;background:#2563EB;color:#fff;font-size:18px}</style></head><body><h1>Proyecto 13 Semanas</h1><div class='c'><h2 id='d'></h2><div id='r'></div></div><div class='c'><div id='t' style='font-size:42px;text-align:center'>20:00</div><button onclick='go()'>Empezar</button></div><div class='c'><label><input id=w type=checkbox> Entrené</label><br><label><input id=c type=checkbox> Creatina</label><br><label><input id=p type=checkbox> Proteína</label><br><label><input id=a type=checkbox> Agua 2L</label></div><script>const R={Lunes:['15 Sentadillas','10 Flexiones','15 Remo','20 Puente','40s Plancha'],Martes:['Movilidad 10 min','Entrenador 20:00'],Miércoles:['10 Búlgaras','8 Pike Push-up','15 Hip Thrust','15 Face Pull'],Jueves:['Movilidad','Entrenador'],Viernes:['3 vueltas cuerpo completo'],Sábado:['Caminar 45 min'],Domingo:['Revisión']};const D=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];let d=D[new Date().getDay()];document.getElementById('d').textContent=d;document.getElementById('r').innerHTML='<ul>'+R[d].map(x=>'<li>'+x+'</li>').join('')+'</ul>';let s=1200,i;function f(){let m=Math.floor(s/60),ss=s%60;document.getElementById('t').textContent=String(m).padStart(2,'0')+':'+String(ss).padStart(2,'0')}f();function go(){if(i){clearInterval(i);i=null;return;}i=setInterval(()=>{s--;f();if(s<=0){clearInterval(i);alert('¡Terminado!');}},1000);}if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');</script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Proyecto 13</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "Segoe UI", sans-serif;
+}
+
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding: 20px 16px 50px;
+}
+
+.header {
+  padding: 20px 4px 10px;
+}
+
+.small {
+  color: #999;
+  font-size: 14px;
+}
+
+h1 {
+  font-size: 34px;
+  margin: 6px 0;
+  letter-spacing: -1px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.card {
+  background: #171717;
+  border: 1px solid #292929;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 14px 0;
+}
+
+.hero {
+  background: linear-gradient(145deg, #1d1d1d, #111);
+}
+
+.big {
+  font-size: 42px;
+  font-weight: 700;
+  margin: 5px 0;
+}
+
+.progress {
+  height: 9px;
+  background: #303030;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 14px 0 5px;
+}
+
+.progressBar {
+  height: 100%;
+  background: #f5f5f5;
+  width: 0%;
+  transition: width .4s;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #292929;
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+.check {
+  width: 24px;
+  height: 24px;
+  accent-color: white;
+}
+
+button {
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #f5f5f5;
+  color: #111;
+  margin-top: 10px;
+}
+
+button.secondary {
+  background: #292929;
+  color: white;
+}
+
+.timer {
+  text-align: center;
+}
+
+.timerNumber {
+  font-size: 64px;
+  font-weight: 700;
+  margin: 10px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.exercise {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.tag {
+  display: inline-block;
+  background: #292929;
+  color: #ccc;
+  border-radius: 20px;
+  padding: 6px 10px;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.warning {
+  color: #bbb;
+  line-height: 1.5;
+}
+
+.hidden {
+  display: none;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #292929;
+}
+
+.stat:last-child {
+  border-bottom: 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="small">PROYECTO · 2026</div>
+    <h1>Mi entrenamiento</h1>
+    <div class="small" id="dateText"></div>
+  </div>
+
+  <div id="beforeStart" class="card hero hidden">
+    <div class="small">INICIO OFICIAL</div>
+    <div class="big">21 SEP</div>
+    <p>Tu preparación comienza el <strong>lunes 21 de septiembre de 2026</strong>.</p>
+    <div class="progress">
+      <div class="progressBar" id="preProgress"></div>
+    </div>
+    <div class="small" id="countdown"></div>
+  </div>
+
+  <div id="travelMode" class="card hero hidden">
+    <div class="small">MODO VIAJE</div>
+    <h2>Has llegado al objetivo</h2>
+    <p class="warning">
+      Del 13 de diciembre al 9 de enero: prioridad a mantenerte activo,
+      caminar, dormir bien y disfrutar.
+    </p>
+  </div>
+
+  <div id="mainApp">
+
+    <div class="card hero">
+      <div class="small">PROGRESO</div>
+      <div class="big" id="weekText">Semana 1 / 12</div>
+
+      <div class="progress">
+        <div class="progressBar" id="mainProgress"></div>
+      </div>
+
+      <div class="small" id="daysText"></div>
+    </div>
+
+    <div class="card">
+      <div class="small">HOY</div>
+      <h2 id="dayTitle">Entrenamiento</h2>
+      <div class="tag" id="dayTag"></div>
+
+      <div id="routine"></div>
+    </div>
+
+    <div class="card timer">
+      <div class="small">TEMPORIZADOR</div>
+      <div class="exercise" id="timerExercise">Preparado</div>
+      <div class="timerNumber" id="timerNumber">00:20</div>
+
+      <button onclick="startTimer()">EMPEZAR</button>
+      <button class="secondary" onclick="resetTimer()">REINICIAR</button>
+    </div>
+
+    <div class="card">
+      <div class="small">CONTROL DIARIO</div>
+
+      <div class="item">
+        <input class="check" type="checkbox" id="water">
+        <label for="water">He bebido suficiente agua</label>
+      </div>
+
+      <div class="item">
+        <input class="check" type="checkbox" id="protein">
+        <label for="protein">He cumplido mi objetivo de proteína</label>
+      </div>
+
+      <div class="item">
+        <input class="check" type="checkbox" id="creatine">
+        <label for="creatine">He tomado 5 g de creatina</label>
+      </div>
+
+      <div class="item">
+        <input class="check" type="checkbox" id="training">
+        <label for="training">He completado el entrenamiento</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="small">TU ESTRUCTURA</div>
+
+      <div class="stat">
+        <span>Lunes</span>
+        <strong>Fuerza · cuerpo completo</strong>
+      </div>
+
+      <div class="stat">
+        <span>Martes</span>
+        <strong>Entrenador · 20:00</strong>
+      </div>
+
+      <div class="stat">
+        <span>Miércoles</span>
+        <strong>Fuerza · cuerpo completo</strong>
+      </div>
+
+      <div class="stat">
+        <span>Jueves</span>
+        <strong>Entrenador · 20:00</strong>
+      </div>
+
+      <div class="stat">
+        <span>Viernes</span>
+        <strong>Fuerza · cuerpo completo</strong>
+      </div>
+
+      <div class="stat">
+        <span>Sábado</span>
+        <strong>Caminar / cardio suave</strong>
+      </div>
+
+      <div class="stat">
+        <span>Domingo</span>
+        <strong>Recuperación</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="small">NUTRICIÓN</div>
+      <p>
+        <strong>05:30</strong> · rutina de mañana
+      </p>
+      <p>
+        Después: agua y trabajo.
+      </p>
+      <p>
+        <strong>10:00</strong> · desayuno + 5 g de creatina
+      </p>
+      <p>
+        Objetivo diario aproximado: <strong>130–145 g de proteína</strong>.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+const START_DATE = new Date("2026-09-21T00:00:00");
+const TRAVEL_DATE = new Date("2026-12-13T00:00:00");
+const RETURN_DATE = new Date("2027-01-09T00:00:00");
+
+const exercises = {
+  monday: [
+    ["Sentadilla", 40],
+    ["Flexiones", 40],
+    ["Remo con mochila/banda", 40],
+    ["Puente de glúteos", 40],
+    ["Plancha", 30]
+  ],
+
+  wednesday: [
+    ["Zancadas", 40],
+    ["Flexiones inclinadas", 40],
+    ["Remo", 40],
+    ["Peso muerto con mochila", 40],
+    ["Plancha lateral", 30]
+  ],
+
+  friday: [
+    ["Sentadilla", 40],
+    ["Flexiones", 40],
+    ["Remo", 40],
+    ["Puente de glúteos", 40],
+    ["Mountain climbers suave", 30]
+  ]
+};
+
+let timerInterval = null;
+let timerSeconds = 20;
+let exerciseIndex = 0;
+
+function saveChecks() {
+  ["water","protein","creatine","training"].forEach(id => {
+    localStorage.setItem(id, document.getElementById(id).checked);
+  });
+}
+
+function loadChecks() {
+  ["water","protein","creatine","training"].forEach(id => {
+    document.getElementById(id).checked =
+      localStorage.getItem(id) === "true";
+
+    document.getElementById(id).addEventListener("change", saveChecks);
+  });
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString("es-ES", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+}
+
+function getDayName(day) {
+  const names = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado"
+  ];
+  return names[day];
+}
+
+function setup() {
+
+  const now = new Date();
+
+  document.getElementById("dateText").textContent =
+    formatDate(now);
+
+  /*
+   * ANTES DEL 21 DE SEPTIEMBRE
+   */
+
+  if (now < START_DATE) {
+
+    document.getElementById("beforeStart").classList.remove("hidden");
+
+    const diff = START_DATE - now;
+    const days = Math.ceil(diff / 86400000);
+
+    document.getElementById("countdown").textContent =
+      "Faltan " + days + " día" + (days === 1 ? "" : "s") +
+      " para empezar.";
+
+    document.getElementById("preProgress").style.width = "0%";
+
+    document.getElementById("mainApp").classList.add("hidden");
+
+    return;
+  }
+
+  /*
+   * MODO VIAJE
+   */
+
+  if (now >= TRAVEL_DATE) {
+
+    document.getElementById("travelMode").classList.remove("hidden");
+    document.getElementById("mainApp").classList.add("hidden");
+
+    return;
+  }
+
+  /*
+   * PROGRAMA DE 12 SEMANAS
+   */
+
+  const daysSinceStart =
+    Math.floor((now - START_DATE) / 86400000);
+
+  let week =
+    Math.floor(daysSinceStart / 7) + 1;
+
+  if (week > 12) week = 12;
+
+  const percentage =
+    Math.min(100, (daysSinceStart / 83) * 100);
+
+  document.getElementById("weekText").textContent =
+    "Semana " + week + " / 12";
+
+  document.getElementById("mainProgress").style.width =
+    percentage + "%";
+
+  const remaining =
+    Math.max(0, 83 - daysSinceStart);
+
+  document.getElementById("daysText").textContent =
+    remaining + " días hasta el comienzo del viaje";
+
+  const day = now.getDay();
+
+  document.getElementById("dayTitle").textContent =
+    getDayName(day);
+
+  showRoutine(day);
+}
+
+function showRoutine(day) {
+
+  const routine = document.getElementById("routine");
+  const tag = document.getElementById("dayTag");
+
+  let list = [];
+  let tagText = "";
+
+  if (day === 1) {
+    list = exercises.monday;
+    tagText = "FUERZA · 05:30 · 20 MIN";
+  }
+
+  else if (day === 2) {
+    list = [
+      ["Movilidad de cadera", 60],
+      ["Movilidad de hombros", 60],
+      ["Respiración / movilidad", 60]
+    ];
+    tagText = "MOVILIDAD + ENTRENADOR 20:00";
+  }
+
+  else if (day === 3) {
+    list = exercises.wednesday;
+    tagText = "FUERZA · 05:30 · 20 MIN";
+  }
+
+  else if (day === 4) {
+    list = [
+      ["Movilidad de cadera", 60],
+      ["Movilidad torácica", 60],
+      ["Estiramientos suaves", 60]
+    ];
+    tagText = "MOVILIDAD + ENTRENADOR 20:00";
+  }
+
+  else if (day === 5) {
+    list = exercises.friday;
+    tagText = "FUERZA · 05:30 · 20 MIN";
+  }
+
+  else if (day === 6) {
+    list = [
+      ["Caminar", 1200]
+    ];
+    tagText = "CARDIO SUAVE";
+  }
+
+  else {
+    list = [
+      ["Descanso", 60]
+    ];
+    tagText = "RECUPERACIÓN";
+  }
+
+  tag.textContent = tagText;
+
+  routine.innerHTML = "";
+
+  list.forEach((item, index) => {
+
+    const div = document.createElement("div");
+    div.className = "item";
+
+    div.innerHTML =
+      "<span style='width:30px;color:#777'>" +
+      (index + 1) +
+      "</span>" +
+      "<span>" + item[0] + "</span>";
+
+    routine.appendChild(div);
+  });
+}
+
+function startTimer() {
+
+  clearInterval(timerInterval);
+
+  const now = new Date();
+  const day = now.getDay();
+
+  let list = [];
+
+  if (day === 1) list = exercises.monday;
+  if (day === 3) list = exercises.wednesday;
+  if (day === 5) list = exercises.friday;
+
+  if (!list.length) {
+    timerSeconds = 60;
+    document.getElementById("timerExercise").textContent =
+      "Movilidad / recuperación";
+  } else {
+    exerciseIndex = 0;
+    timerSeconds = list[0][1];
+    document.getElementById("timerExercise").textContent =
+      list[0][0];
+  }
+
+  updateTimer();
+
+  timerInterval = setInterval(() => {
+
+    timerSeconds--;
+
+    if (timerSeconds <= 0) {
+
+      exerciseIndex++;
+
+      if (list.length && exerciseIndex < list.length) {
+
+        timerSeconds = list[exerciseIndex][1];
+
+        document.getElementById("timerExercise").textContent =
+          list[exerciseIndex][0];
+
+      } else {
+
+        clearInterval(timerInterval);
+
+        document.getElementById("timerExercise").textContent =
+          "¡Entrenamiento terminado!";
+
+        timerSeconds = 0;
+      }
+    }
+
+    updateTimer();
+
+  }, 1000);
+}
+
+function resetTimer() {
+
+  clearInterval(timerInterval);
+
+  timerSeconds = 20;
+  exerciseIndex = 0;
+
+  document.getElementById("timerExercise").textContent =
+    "Preparado";
+
+  updateTimer();
+}
+
+function updateTimer() {
+
+  const minutes =
+    Math.floor(timerSeconds / 60)
+    .toString()
+    .padStart(2, "0");
+
+  const seconds =
+    (timerSeconds % 60)
+    .toString()
+    .padStart(2, "0");
+
+  document.getElementById("timerNumber").textContent =
+    minutes + ":" + seconds;
+}
+
+loadChecks();
+setup();
+
+</script>
+
+</body>
+</html>
