@@ -2,619 +2,496 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0b">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Proyecto 13</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+ margin:0;background:#090909;color:#f5f5f5;
+ font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif
 }
-
-body {
-  margin: 0;
-  background: #0b0b0b;
-  color: #f5f5f5;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-               "Segoe UI", sans-serif;
+.app{max-width:680px;margin:auto;padding:env(safe-area-inset-top) 16px 50px}
+header{padding:25px 4px 15px}
+.muted{color:#929292;font-size:13px}
+h1{font-size:34px;margin:5px 0;letter-spacing:-1px}
+h2{margin:4px 0 14px;font-size:24px}
+.card{
+ background:#171717;border:1px solid #292929;border-radius:22px;
+ padding:20px;margin:14px 0
 }
-
-.container {
-  max-width: 650px;
-  margin: auto;
-  padding: 20px 16px 50px;
+.hero{background:linear-gradient(145deg,#202020,#111)}
+.big{font-size:44px;font-weight:750;letter-spacing:-2px}
+.progress{height:8px;background:#303030;border-radius:20px;overflow:hidden;margin:15px 0 7px}
+.bar{height:100%;width:0;background:#f5f5f5;transition:.4s}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.statbox{background:#202020;border-radius:16px;padding:14px}
+.statbox strong{display:block;font-size:23px;margin-top:3px}
+.exercise{
+ display:flex;align-items:center;gap:13px;
+ padding:14px 0;border-bottom:1px solid #292929
 }
-
-.header {
-  padding: 20px 4px 10px;
+.exercise:last-child{border-bottom:0}
+.num{
+ width:30px;height:30px;border-radius:50%;background:#292929;
+ display:flex;align-items:center;justify-content:center;font-size:13px
 }
-
-.small {
-  color: #999;
-  font-size: 14px;
+.exname{flex:1;font-weight:600}
+.exdetail{color:#999;font-size:12px;margin-top:3px}
+button{
+ width:100%;border:0;border-radius:15px;padding:15px;margin-top:9px;
+ background:#f4f4f4;color:#111;font-size:16px;font-weight:700
 }
-
-h1 {
-  font-size: 34px;
-  margin: 6px 0;
-  letter-spacing: -1px;
+button.dark{background:#292929;color:#fff}
+button.smallbtn{width:auto;padding:10px 14px;margin:0}
+input{
+ width:100%;padding:13px;border-radius:12px;border:1px solid #333;
+ background:#111;color:white;font-size:16px
 }
-
-h2 {
-  margin-top: 0;
+label{display:block;color:#aaa;font-size:13px;margin:12px 0 6px}
+.checkrow{
+ display:flex;align-items:center;gap:12px;padding:13px 0;
+ border-bottom:1px solid #292929
 }
-
-.card {
-  background: #171717;
-  border: 1px solid #292929;
-  border-radius: 20px;
-  padding: 20px;
-  margin: 14px 0;
+.checkrow:last-child{border:0}
+.checkrow input{width:22px;height:22px}
+.timer{text-align:center}
+.timerstate{font-size:13px;color:#999}
+.timerexercise{font-size:22px;font-weight:700;margin:8px 0}
+.clock{font-size:68px;font-weight:750;font-variant-numeric:tabular-nums;letter-spacing:-3px}
+.tag{
+ display:inline-block;background:#292929;border-radius:20px;
+ padding:7px 11px;font-size:12px;color:#ccc
 }
-
-.hero {
-  background: linear-gradient(145deg, #1d1d1d, #111);
-}
-
-.big {
-  font-size: 42px;
-  font-weight: 700;
-  margin: 5px 0;
-}
-
-.progress {
-  height: 9px;
-  background: #303030;
-  border-radius: 20px;
-  overflow: hidden;
-  margin: 14px 0 5px;
-}
-
-.progressBar {
-  height: 100%;
-  background: #f5f5f5;
-  width: 0%;
-  transition: width .4s;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 0;
-  border-bottom: 1px solid #292929;
-}
-
-.item:last-child {
-  border-bottom: 0;
-}
-
-.check {
-  width: 24px;
-  height: 24px;
-  accent-color: white;
-}
-
-button {
-  width: 100%;
-  border: 0;
-  border-radius: 14px;
-  padding: 15px;
-  font-size: 16px;
-  font-weight: 600;
-  background: #f5f5f5;
-  color: #111;
-  margin-top: 10px;
-}
-
-button.secondary {
-  background: #292929;
-  color: white;
-}
-
-.timer {
-  text-align: center;
-}
-
-.timerNumber {
-  font-size: 64px;
-  font-weight: 700;
-  margin: 10px 0;
-  font-variant-numeric: tabular-nums;
-}
-
-.exercise {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.tag {
-  display: inline-block;
-  background: #292929;
-  color: #ccc;
-  border-radius: 20px;
-  padding: 6px 10px;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.warning {
-  color: #bbb;
-  line-height: 1.5;
-}
-
-.hidden {
-  display: none;
-}
-
-.stat {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #292929;
-}
-
-.stat:last-child {
-  border-bottom: 0;
-}
+.notice{line-height:1.55;color:#bbb}
+.hidden{display:none}
+.footer{text-align:center;color:#666;font-size:12px;margin-top:25px}
 </style>
 </head>
 
 <body>
+<div class="app">
 
-<div class="container">
+<header>
+ <div class="muted">PROYECTO · 2026</div>
+ <h1>Mi entrenamiento</h1>
+ <div class="muted" id="today"></div>
+</header>
 
-  <div class="header">
-    <div class="small">PROYECTO · 2026</div>
-    <h1>Mi entrenamiento</h1>
-    <div class="small" id="dateText"></div>
+<!-- ANTES DEL INICIO -->
+<section id="prestart" class="card hero hidden">
+ <div class="muted">INICIO OFICIAL</div>
+ <div class="big">21 SEP</div>
+ <p class="notice">
+ El programa comienza el <strong>lunes 21 de septiembre de 2026</strong>.
+ </p>
+ <div class="progress"><div class="bar" id="prebar"></div></div>
+ <div class="muted" id="countdown"></div>
+</section>
+
+<!-- VIAJE -->
+<section id="travel" class="card hero hidden">
+ <div class="muted">MODO VIAJE</div>
+ <h2>Objetivo completado</h2>
+ <p class="notice">
+ Desde el 13 de diciembre: mantén actividad, camina siempre que puedas,
+ haz algo de fuerza cuando sea posible y disfruta del viaje.
+ </p>
+ <div class="grid">
+  <div class="statbox"><span class="muted">Vuelta</span><strong>9 ENE</strong></div>
+  <div class="statbox"><span class="muted">Prioridad</span><strong>MANTENER</strong></div>
+ </div>
+</section>
+
+<main id="main">
+
+<section class="card hero">
+ <div class="muted">PROGRESO DEL PROGRAMA</div>
+ <div class="big" id="week">Semana 1 / 12</div>
+ <div class="progress"><div class="bar" id="mainbar"></div></div>
+ <div class="muted" id="daysleft"></div>
+
+ <div class="grid" style="margin-top:15px">
+  <div class="statbox">
+   <span class="muted">Días</span>
+   <strong id="daynum">1</strong>
   </div>
-
-  <div id="beforeStart" class="card hero hidden">
-    <div class="small">INICIO OFICIAL</div>
-    <div class="big">21 SEP</div>
-    <p>Tu preparación comienza el <strong>lunes 21 de septiembre de 2026</strong>.</p>
-    <div class="progress">
-      <div class="progressBar" id="preProgress"></div>
-    </div>
-    <div class="small" id="countdown"></div>
+  <div class="statbox">
+   <span class="muted">Completados</span>
+   <strong id="completed">0</strong>
   </div>
+ </div>
+</section>
 
-  <div id="travelMode" class="card hero hidden">
-    <div class="small">MODO VIAJE</div>
-    <h2>Has llegado al objetivo</h2>
-    <p class="warning">
-      Del 13 de diciembre al 9 de enero: prioridad a mantenerte activo,
-      caminar, dormir bien y disfrutar.
-    </p>
-  </div>
+<section class="card">
+ <div class="muted">HOY</div>
+ <h2 id="daytitle">Entrenamiento</h2>
+ <span class="tag" id="tag">—</span>
+ <div id="routine"></div>
+</section>
 
-  <div id="mainApp">
+<section class="card timer">
+ <div class="timerstate" id="timerstate">TEMPORIZADOR</div>
+ <div class="timerexercise" id="timerexercise">Preparado</div>
+ <div class="clock" id="clock">00:30</div>
+ <button onclick="startWorkout()">EMPEZAR ENTRENAMIENTO</button>
+ <button class="dark" onclick="resetTimer()">REINICIAR</button>
+</section>
 
-    <div class="card hero">
-      <div class="small">PROGRESO</div>
-      <div class="big" id="weekText">Semana 1 / 12</div>
+<section class="card">
+ <div class="muted">CONTROL DE HOY</div>
 
-      <div class="progress">
-        <div class="progressBar" id="mainProgress"></div>
-      </div>
+ <div class="checkrow">
+  <input type="checkbox" id="water">
+  <span>He bebido suficiente agua</span>
+ </div>
 
-      <div class="small" id="daysText"></div>
-    </div>
+ <div class="checkrow">
+  <input type="checkbox" id="protein">
+  <span>He llegado a mi objetivo de proteína</span>
+ </div>
 
-    <div class="card">
-      <div class="small">HOY</div>
-      <h2 id="dayTitle">Entrenamiento</h2>
-      <div class="tag" id="dayTag"></div>
+ <div class="checkrow">
+  <input type="checkbox" id="creatine">
+  <span>He tomado 5 g de creatina</span>
+ </div>
 
-      <div id="routine"></div>
-    </div>
+ <div class="checkrow">
+  <input type="checkbox" id="training">
+  <span>He completado el entrenamiento</span>
+ </div>
+</section>
 
-    <div class="card timer">
-      <div class="small">TEMPORIZADOR</div>
-      <div class="exercise" id="timerExercise">Preparado</div>
-      <div class="timerNumber" id="timerNumber">00:20</div>
+<section class="card">
+ <div class="muted">MEDIDAS</div>
 
-      <button onclick="startTimer()">EMPEZAR</button>
-      <button class="secondary" onclick="resetTimer()">REINICIAR</button>
-    </div>
+ <label>Peso (kg)</label>
+ <input id="weight" type="number" step="0.1" placeholder="Ej. 80.5">
 
-    <div class="card">
-      <div class="small">CONTROL DIARIO</div>
+ <label>Cintura (cm)</label>
+ <input id="waist" type="number" step="0.1" placeholder="Ej. 92">
 
-      <div class="item">
-        <input class="check" type="checkbox" id="water">
-        <label for="water">He bebido suficiente agua</label>
-      </div>
+ <button onclick="saveMeasurements()">GUARDAR MEDIDAS</button>
+</section>
 
-      <div class="item">
-        <input class="check" type="checkbox" id="protein">
-        <label for="protein">He cumplido mi objetivo de proteína</label>
-      </div>
+<section class="card">
+ <div class="muted">NUTRICIÓN</div>
 
-      <div class="item">
-        <input class="check" type="checkbox" id="creatine">
-        <label for="creatine">He tomado 5 g de creatina</label>
-      </div>
+ <div class="statbox" style="margin-top:12px">
+  <span class="muted">Objetivo proteína</span>
+  <strong>130–145 g/día</strong>
+ </div>
 
-      <div class="item">
-        <input class="check" type="checkbox" id="training">
-        <label for="training">He completado el entrenamiento</label>
-      </div>
-    </div>
+ <p class="notice">
+ <strong>05:30</strong> · entrenamiento + agua
+ </p>
+ <p class="notice">
+ <strong>10:00</strong> · desayuno + 5 g de creatina
+ </p>
+ <p class="notice">
+ Prioriza alimentos ricos en proteína y mantén bajos los azúcares añadidos.
+ </p>
+</section>
 
-    <div class="card">
-      <div class="small">TU ESTRUCTURA</div>
+<section class="card">
+ <div class="muted">SEMANA</div>
+ <p class="notice">
+ Lunes · fuerza cuerpo completo<br>
+ Martes · movilidad + entrenador 20:00<br>
+ Miércoles · fuerza cuerpo completo<br>
+ Jueves · movilidad + entrenador 20:00<br>
+ Viernes · fuerza cuerpo completo<br>
+ Sábado · caminar / cardio suave<br>
+ Domingo · recuperación
+ </p>
+</section>
 
-      <div class="stat">
-        <span>Lunes</span>
-        <strong>Fuerza · cuerpo completo</strong>
-      </div>
+</main>
 
-      <div class="stat">
-        <span>Martes</span>
-        <strong>Entrenador · 20:00</strong>
-      </div>
+<div class="footer">
+ Proyecto 13 · preparación hasta el 13 de diciembre de 2026
+</div>
 
-      <div class="stat">
-        <span>Miércoles</span>
-        <strong>Fuerza · cuerpo completo</strong>
-      </div>
-
-      <div class="stat">
-        <span>Jueves</span>
-        <strong>Entrenador · 20:00</strong>
-      </div>
-
-      <div class="stat">
-        <span>Viernes</span>
-        <strong>Fuerza · cuerpo completo</strong>
-      </div>
-
-      <div class="stat">
-        <span>Sábado</span>
-        <strong>Caminar / cardio suave</strong>
-      </div>
-
-      <div class="stat">
-        <span>Domingo</span>
-        <strong>Recuperación</strong>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="small">NUTRICIÓN</div>
-      <p>
-        <strong>05:30</strong> · rutina de mañana
-      </p>
-      <p>
-        Después: agua y trabajo.
-      </p>
-      <p>
-        <strong>10:00</strong> · desayuno + 5 g de creatina
-      </p>
-      <p>
-        Objetivo diario aproximado: <strong>130–145 g de proteína</strong>.
-      </p>
-    </div>
-
-  </div>
 </div>
 
 <script>
+const START = new Date("2026-09-21T00:00:00");
+const TRAVEL = new Date("2026-12-13T00:00:00");
 
-const START_DATE = new Date("2026-09-21T00:00:00");
-const TRAVEL_DATE = new Date("2026-12-13T00:00:00");
-const RETURN_DATE = new Date("2027-01-09T00:00:00");
-
-const exercises = {
-  monday: [
-    ["Sentadilla", 40],
-    ["Flexiones", 40],
-    ["Remo con mochila/banda", 40],
-    ["Puente de glúteos", 40],
-    ["Plancha", 30]
-  ],
-
-  wednesday: [
-    ["Zancadas", 40],
-    ["Flexiones inclinadas", 40],
-    ["Remo", 40],
-    ["Peso muerto con mochila", 40],
-    ["Plancha lateral", 30]
-  ],
-
-  friday: [
-    ["Sentadilla", 40],
-    ["Flexiones", 40],
-    ["Remo", 40],
-    ["Puente de glúteos", 40],
-    ["Mountain climbers suave", 30]
-  ]
+const routines = {
+  1:{
+   title:"Lunes · Cuerpo completo",
+   tag:"FUERZA · 05:30",
+   exercises:[
+    ["Sentadilla","3 × 10","40 s"],
+    ["Flexiones","3 × 8–12","40 s"],
+    ["Remo con banda o mochila","3 × 10–12","40 s"],
+    ["Puente de glúteos","3 × 12","40 s"],
+    ["Plancha","3 × 30 s","30 s"]
+   ]
+  },
+  2:{
+   title:"Martes · Movilidad",
+   tag:"MOVILIDAD + ENTRENADOR · 20:00",
+   exercises:[
+    ["Movilidad de cadera","2 × 45 s","30 s"],
+    ["Movilidad de hombros","2 × 45 s","30 s"],
+    ["Movilidad torácica","2 × 45 s","30 s"]
+   ]
+  },
+  3:{
+   title:"Miércoles · Cuerpo completo",
+   tag:"FUERZA · 05:30",
+   exercises:[
+    ["Zancadas","3 × 8 por pierna","40 s"],
+    ["Flexiones inclinadas o normales","3 × 8–12","40 s"],
+    ["Remo con banda o mochila","3 × 10–12","40 s"],
+    ["Peso muerto con mochila","3 × 10","40 s"],
+    ["Plancha lateral","3 × 25 s por lado","30 s"]
+   ]
+  },
+  4:{
+   title:"Jueves · Movilidad",
+   tag:"MOVILIDAD + ENTRENADOR · 20:00",
+   exercises:[
+    ["Movilidad de tobillo","2 × 45 s","30 s"],
+    ["Movilidad de cadera","2 × 45 s","30 s"],
+    ["Rotación torácica","2 × 45 s","30 s"]
+   ]
+  },
+  5:{
+   title:"Viernes · Cuerpo completo",
+   tag:"FUERZA · 05:30",
+   exercises:[
+    ["Sentadilla","3 × 10","40 s"],
+    ["Flexiones","3 × 8–12","40 s"],
+    ["Remo","3 × 10–12","40 s"],
+    ["Puente de glúteos","3 × 12","40 s"],
+    ["Mountain climbers suave","3 × 30 s","30 s"]
+   ]
+  },
+  6:{
+   title:"Sábado · Cardio suave",
+   tag:"ACTIVIDAD",
+   exercises:[
+    ["Caminar a buen ritmo","30–45 min","—"]
+   ]
+  },
+  0:{
+   title:"Domingo · Recuperación",
+   tag:"DESCANSO",
+   exercises:[
+    ["Paseo suave","20–40 min","—"],
+    ["Estiramientos suaves","5–10 min","—"]
+   ]
+  }
 };
 
-let timerInterval = null;
-let timerSeconds = 20;
-let exerciseIndex = 0;
+let timer=null;
+let current=0;
+let seconds=30;
+let list=[];
 
-function saveChecks() {
-  ["water","protein","creatine","training"].forEach(id => {
-    localStorage.setItem(id, document.getElementById(id).checked);
-  });
+function key(){
+ return "p13-" + new Date().toISOString().slice(0,10);
 }
 
-function loadChecks() {
-  ["water","protein","creatine","training"].forEach(id => {
-    document.getElementById(id).checked =
-      localStorage.getItem(id) === "true";
-
-    document.getElementById(id).addEventListener("change", saveChecks);
-  });
+function loadToday(){
+ const k=key();
+ ["water","protein","creatine","training"].forEach(id=>{
+  const el=document.getElementById(id);
+  el.checked=localStorage.getItem(k+"-"+id)==="1";
+  el.onchange=()=>localStorage.setItem(k+"-"+id,el.checked?"1":"0");
+ });
+ document.getElementById("weight").value=localStorage.getItem(k+"-weight")||"";
+ document.getElementById("waist").value=localStorage.getItem(k+"-waist")||"";
 }
 
-function formatDate(date) {
-  return date.toLocaleDateString("es-ES", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-  });
+function saveMeasurements(){
+ const k=key();
+ localStorage.setItem(k+"-weight",document.getElementById("weight").value);
+ localStorage.setItem(k+"-waist",document.getElementById("waist").value);
+ alert("Medidas guardadas.");
 }
 
-function getDayName(day) {
-  const names = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado"
-  ];
-  return names[day];
+function formatDate(d){
+ return d.toLocaleDateString("es-ES",{
+  weekday:"long",day:"numeric",month:"long",year:"numeric"
+ });
 }
 
-function setup() {
+function setup(){
 
-  const now = new Date();
+ const now=new Date();
+ document.getElementById("today").textContent=formatDate(now);
 
-  document.getElementById("dateText").textContent =
-    formatDate(now);
+ if(now<START){
+  document.getElementById("prestart").classList.remove("hidden");
+  document.getElementById("main").classList.add("hidden");
 
-  /*
-   * ANTES DEL 21 DE SEPTIEMBRE
-   */
+  const days=Math.ceil((START-now)/86400000);
+  document.getElementById("countdown").textContent=
+   "Faltan "+days+" días para empezar.";
+  return;
+ }
 
-  if (now < START_DATE) {
+ if(now>=TRAVEL){
+  document.getElementById("travel").classList.remove("hidden");
+  document.getElementById("main").classList.add("hidden");
+  return;
+ }
 
-    document.getElementById("beforeStart").classList.remove("hidden");
+ const days=Math.floor((now-START)/86400000);
+ const week=Math.min(12,Math.floor(days/7)+1);
+ const percent=Math.min(100,(days/83)*100);
 
-    const diff = START_DATE - now;
-    const days = Math.ceil(diff / 86400000);
+ document.getElementById("week").textContent=
+  "Semana "+week+" / 12";
+ document.getElementById("mainbar").style.width=percent+"%";
+ document.getElementById("daynum").textContent=days+1;
+ document.getElementById("daysleft").textContent=
+  Math.max(0,83-days)+" días hasta el viaje";
 
-    document.getElementById("countdown").textContent =
-      "Faltan " + days + " día" + (days === 1 ? "" : "s") +
-      " para empezar.";
+ const day=now.getDay();
+ const r=routines[day];
 
-    document.getElementById("preProgress").style.width = "0%";
+ document.getElementById("daytitle").textContent=r.title;
+ document.getElementById("tag").textContent=r.tag;
 
-    document.getElementById("mainApp").classList.add("hidden");
+ list=r.exercises;
 
-    return;
-  }
+ const container=document.getElementById("routine");
+ container.innerHTML="";
 
-  /*
-   * MODO VIAJE
-   */
+ list.forEach((e,i)=>{
+  const row=document.createElement("div");
+  row.className="exercise";
+  row.innerHTML=
+   '<div class="num">'+(i+1)+'</div>'+
+   '<div class="exname">'+e[0]+
+   '<div class="exdetail">'+e[1]+' · descanso '+e[2]+'</div>'+
+   '</div>';
+  container.appendChild(row);
+ });
 
-  if (now >= TRAVEL_DATE) {
-
-    document.getElementById("travelMode").classList.remove("hidden");
-    document.getElementById("mainApp").classList.add("hidden");
-
-    return;
-  }
-
-  /*
-   * PROGRAMA DE 12 SEMANAS
-   */
-
-  const daysSinceStart =
-    Math.floor((now - START_DATE) / 86400000);
-
-  let week =
-    Math.floor(daysSinceStart / 7) + 1;
-
-  if (week > 12) week = 12;
-
-  const percentage =
-    Math.min(100, (daysSinceStart / 83) * 100);
-
-  document.getElementById("weekText").textContent =
-    "Semana " + week + " / 12";
-
-  document.getElementById("mainProgress").style.width =
-    percentage + "%";
-
-  const remaining =
-    Math.max(0, 83 - daysSinceStart);
-
-  document.getElementById("daysText").textContent =
-    remaining + " días hasta el comienzo del viaje";
-
-  const day = now.getDay();
-
-  document.getElementById("dayTitle").textContent =
-    getDayName(day);
-
-  showRoutine(day);
+ loadToday();
 }
 
-function showRoutine(day) {
-
-  const routine = document.getElementById("routine");
-  const tag = document.getElementById("dayTag");
-
-  let list = [];
-  let tagText = "";
-
-  if (day === 1) {
-    list = exercises.monday;
-    tagText = "FUERZA · 05:30 · 20 MIN";
-  }
-
-  else if (day === 2) {
-    list = [
-      ["Movilidad de cadera", 60],
-      ["Movilidad de hombros", 60],
-      ["Respiración / movilidad", 60]
-    ];
-    tagText = "MOVILIDAD + ENTRENADOR 20:00";
-  }
-
-  else if (day === 3) {
-    list = exercises.wednesday;
-    tagText = "FUERZA · 05:30 · 20 MIN";
-  }
-
-  else if (day === 4) {
-    list = [
-      ["Movilidad de cadera", 60],
-      ["Movilidad torácica", 60],
-      ["Estiramientos suaves", 60]
-    ];
-    tagText = "MOVILIDAD + ENTRENADOR 20:00";
-  }
-
-  else if (day === 5) {
-    list = exercises.friday;
-    tagText = "FUERZA · 05:30 · 20 MIN";
-  }
-
-  else if (day === 6) {
-    list = [
-      ["Caminar", 1200]
-    ];
-    tagText = "CARDIO SUAVE";
-  }
-
-  else {
-    list = [
-      ["Descanso", 60]
-    ];
-    tagText = "RECUPERACIÓN";
-  }
-
-  tag.textContent = tagText;
-
-  routine.innerHTML = "";
-
-  list.forEach((item, index) => {
-
-    const div = document.createElement("div");
-    div.className = "item";
-
-    div.innerHTML =
-      "<span style='width:30px;color:#777'>" +
-      (index + 1) +
-      "</span>" +
-      "<span>" + item[0] + "</span>";
-
-    routine.appendChild(div);
-  });
+function display(){
+ const m=Math.floor(seconds/60).toString().padStart(2,"0");
+ const s=(seconds%60).toString().padStart(2,"0");
+ document.getElementById("clock").textContent=m+":"+s;
 }
 
-function startTimer() {
+function startWorkout(){
 
-  clearInterval(timerInterval);
+ clearInterval(timer);
 
-  const now = new Date();
-  const day = now.getDay();
+ if(!list.length)return;
 
-  let list = [];
+ current=0;
+ beginExercise();
 
-  if (day === 1) list = exercises.monday;
-  if (day === 3) list = exercises.wednesday;
-  if (day === 5) list = exercises.friday;
+}
 
-  if (!list.length) {
-    timerSeconds = 60;
-    document.getElementById("timerExercise").textContent =
-      "Movilidad / recuperación";
-  } else {
-    exerciseIndex = 0;
-    timerSeconds = list[0][1];
-    document.getElementById("timerExercise").textContent =
-      list[0][0];
+function beginExercise(){
+
+ const ex=list[current];
+
+ if(!ex)return;
+
+ document.getElementById("timerstate").textContent=
+  "EJERCICIO "+(current+1)+" DE "+list.length;
+
+ document.getElementById("timerexercise").textContent=ex[0];
+
+ seconds=parseTime(ex[1]);
+
+ display();
+
+ timer=setInterval(()=>{
+
+  seconds--;
+  display();
+
+  if(seconds<=0){
+
+   clearInterval(timer);
+
+   current++;
+
+   if(current<list.length){
+
+    document.getElementById("timerstate").textContent="DESCANSO";
+    document.getElementById("timerexercise").textContent=
+     "30 segundos";
+
+    seconds=30;
+    display();
+
+    setTimeout(()=>{
+     if(current<list.length)beginExercise();
+    },1000);
+
+   }else{
+
+    document.getElementById("timerstate").textContent="TERMINADO";
+    document.getElementById("timerexercise").textContent=
+     "¡Entrenamiento completado!";
+    seconds=0;
+    display();
+
+    document.getElementById("training").checked=true;
+    localStorage.setItem(key()+"-training","1");
+
+    updateCompleted();
+   }
+
   }
 
-  updateTimer();
-
-  timerInterval = setInterval(() => {
-
-    timerSeconds--;
-
-    if (timerSeconds <= 0) {
-
-      exerciseIndex++;
-
-      if (list.length && exerciseIndex < list.length) {
-
-        timerSeconds = list[exerciseIndex][1];
-
-        document.getElementById("timerExercise").textContent =
-          list[exerciseIndex][0];
-
-      } else {
-
-        clearInterval(timerInterval);
-
-        document.getElementById("timerExercise").textContent =
-          "¡Entrenamiento terminado!";
-
-        timerSeconds = 0;
-      }
-    }
-
-    updateTimer();
-
-  }, 1000);
+ },1000);
 }
 
-function resetTimer() {
+function parseTime(text){
 
-  clearInterval(timerInterval);
+ if(text.includes("min")){
+  const n=parseInt(text);
+  return n*60;
+ }
 
-  timerSeconds = 20;
-  exerciseIndex = 0;
+ if(text.includes("s")){
+  const n=parseInt(text);
+  return n||30;
+ }
 
-  document.getElementById("timerExercise").textContent =
-    "Preparado";
-
-  updateTimer();
+ return 40;
 }
 
-function updateTimer() {
-
-  const minutes =
-    Math.floor(timerSeconds / 60)
-    .toString()
-    .padStart(2, "0");
-
-  const seconds =
-    (timerSeconds % 60)
-    .toString()
-    .padStart(2, "0");
-
-  document.getElementById("timerNumber").textContent =
-    minutes + ":" + seconds;
+function resetTimer(){
+ clearInterval(timer);
+ current=0;
+ seconds=30;
+ document.getElementById("timerstate").textContent="TEMPORIZADOR";
+ document.getElementById("timerexercise").textContent="Preparado";
+ display();
 }
 
-loadChecks();
+function updateCompleted(){
+ let total=0;
+ const prefix="p13-";
+ for(let i=0;i<localStorage.length;i++){
+  const k=localStorage.key(i);
+  if(k && k.endsWith("-training") && localStorage.getItem(k)==="1") total++;
+ }
+ document.getElementById("completed").textContent=total;
+}
+
 setup();
-
+updateCompleted();
+display();
 </script>
 
 </body>
